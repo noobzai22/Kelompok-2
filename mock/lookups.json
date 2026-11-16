@@ -1,0 +1,24 @@
+
+{
+  "categories": [
+    { "id": 1, "name": "KTM dan kartu identitas" },
+    { "id": 2, "name": "Elektronik dan charger" },
+    { "id": 3, "name": "Tas dan dompet" },
+    { "id": 4, "name": "Botol minum" },
+    { "id": 5, "name": "Buku dan alat tulis" },
+    { "id": 6, "name": "Pakaian dan aksesori" },
+    { "id": 7, "name": "Kunci" },
+    { "id": 8, "name": "Lainnya" }
+  ],
+  "locations": [
+    { "id": 1, "name": "Ruang kelas" },
+    { "id": 2, "name": "Laboratorium" },
+    { "id": 3, "name": "Sekretariat organisasi" },
+    { "id": 4, "name": "Perpustakaan" },
+    { "id": 5, "name": "Kantin" },
+    { "id": 6, "name": "Masjid atau musala" },
+    { "id": 7, "name": "Pos satpam" },
+    { "id": 8, "name": "Area parkir" },
+    { "id": 9, "name": "Lainnya" }
+  ]
+}

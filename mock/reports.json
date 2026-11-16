@@ -1,0 +1,141 @@
+
+[
+  {
+    "id": "6b1f6a52-3c1b-4a7e-9c55-0d6a1f2e8b01",
+    "type": "LOST",
+    "title": "Tumbler biru Tupperware",
+    "description": "Tumbler biru tutup putih, ada stiker kucing di badan. Tertinggal setelah kuliah pagi.",
+    "category": {
+      "id": 4,
+      "name": "Botol minum"
+    },
+    "location": {
+      "id": 1,
+      "name": "Ruang kelas"
+    },
+    "locationDetail": "Ruang A206",
+    "eventDate": "2026-11-12",
+    "photoUrl": null,
+    "contactMethod": "WHATSAPP",
+    "contactValue": "6281234567890",
+    "reporterName": "Rani",
+    "status": "ACTIVE",
+    "createdAt": "2026-11-12T08:15:00.000Z",
+    "updatedAt": "2026-11-12T08:15:00.000Z"
+  },
+  {
+    "id": "0c7a3e18-5d2f-4b94-8a61-7e9b4c2d1f02",
+    "type": "FOUND",
+    "title": "KTM atas nama Dimas",
+    "description": "KTM ditemukan di meja dekat pintu masuk. Bisa diambil dengan menyebutkan NPM.",
+    "category": {
+      "id": 1,
+      "name": "KTM dan kartu identitas"
+    },
+    "location": {
+      "id": 4,
+      "name": "Perpustakaan"
+    },
+    "locationDetail": null,
+    "eventDate": "2026-11-14",
+    "photoUrl": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+    "contactMethod": "INSTAGRAM",
+    "contactValue": "dimas.finder",
+    "reporterName": null,
+    "status": "ACTIVE",
+    "createdAt": "2026-11-14T03:20:00.000Z",
+    "updatedAt": "2026-11-14T03:20:00.000Z"
+  },
+  {
+    "id": "4e9d1b27-8a30-4c5e-b172-3f6a8d0c9e03",
+    "type": "LOST",
+    "title": "Charger laptop Asus 65W",
+    "description": "Charger hitam dengan kabel dililit karet gelang. Terakhir dipakai di sekretariat.",
+    "category": {
+      "id": 2,
+      "name": "Elektronik dan charger"
+    },
+    "location": {
+      "id": 3,
+      "name": "Sekretariat organisasi"
+    },
+    "locationDetail": "Meja panjang",
+    "eventDate": "2026-11-10",
+    "photoUrl": null,
+    "contactMethod": "LINE",
+    "contactValue": "budi.charger",
+    "reporterName": "Budi",
+    "status": "ACTIVE",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z"
+  },
+  {
+    "id": "9a2c5f40-1e7b-4d38-9f06-b8e3a7c1d204",
+    "type": "FOUND",
+    "title": "Payung lipat hitam",
+    "description": "Payung lipat hitam, gagang ada tali merah. Dititipkan ke ibu kantin.",
+    "category": {
+      "id": 8,
+      "name": "Lainnya"
+    },
+    "location": {
+      "id": 5,
+      "name": "Kantin"
+    },
+    "locationDetail": null,
+    "eventDate": "2026-11-13",
+    "photoUrl": null,
+    "contactMethod": "EMAIL",
+    "contactValue": "penemu.payung@example.com",
+    "reporterName": "Tia",
+    "status": "ACTIVE",
+    "createdAt": "2026-11-13T05:45:00.000Z",
+    "updatedAt": "2026-11-13T05:45:00.000Z"
+  },
+  {
+    "id": "d3b8e6a1-7c49-4f25-8b10-2a5d9e4f6c05",
+    "type": "FOUND",
+    "title": "Kunci motor Honda",
+    "description": "Kunci motor dengan gantungan kunci kayu bertuliskan huruf S.",
+    "category": {
+      "id": 7,
+      "name": "Kunci"
+    },
+    "location": {
+      "id": 8,
+      "name": "Area parkir"
+    },
+    "locationDetail": "Dekat pos jaga",
+    "eventDate": "2026-11-11",
+    "photoUrl": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+    "contactMethod": "WHATSAPP",
+    "contactValue": "6285711112222",
+    "reporterName": "Sari",
+    "status": "ACTIVE",
+    "createdAt": "2026-11-11T07:30:00.000Z",
+    "updatedAt": "2026-11-11T07:30:00.000Z"
+  },
+  {
+    "id": "f5c1a9d3-2b68-4e07-a4d9-6c8b0e3f7a06",
+    "type": "LOST",
+    "title": "Dompet kulit cokelat",
+    "description": "Dompet cokelat berisi kartu ATM dan SIM. Mungkin jatuh saat salat zuhur.",
+    "category": {
+      "id": 3,
+      "name": "Tas dan dompet"
+    },
+    "location": {
+      "id": 6,
+      "name": "Masjid atau musala"
+    },
+    "locationDetail": null,
+    "eventDate": "2026-11-09",
+    "photoUrl": null,
+    "contactMethod": "WHATSAPP",
+    "contactValue": "6282233334444",
+    "reporterName": "Andi",
+    "status": "ACTIVE",
+    "createdAt": "2026-11-09T11:10:00.000Z",
+    "updatedAt": "2026-11-09T11:10:00.000Z"
+  }
+]
