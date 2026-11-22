@@ -58,9 +58,37 @@ function SubmitReport() {
     }
   }
 
+  
   useEffect(() => {
-    fetchLookups();
+    let active = true;
+
+    getLookups()
+      .then((data) => {
+        if (!active) return;
+
+        setLookups({
+          categories: data.categories || [],
+          locations: data.locations || [],
+        });
+      })
+      .catch((err) => {
+        if (active) {
+          setLookupError(
+            err.message || "Gagal memuat kategori dan lokasi."
+          );
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setLoadingLookups(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
+
 
   function validateField(name, value, currentForm = form) {
     const trimmed = typeof value === "string" ? value.trim() : value;
@@ -288,7 +316,7 @@ function SubmitReport() {
           >
             <option value="LOST">Barang Hilang</option>
             <option value="FOUND">Barang Ditemukan</option>
-          </select>
+          </select>61
         </label>
 
         <label>

@@ -4,22 +4,41 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024;
 
 function PhotoPicker({ file, onChange, onValidationError }) {
-  const [previewUrl, setPreviewUrl] = useState("");
+  
+  const [preview, setPreview] = useState({
+    file: null,
+    url: "",
+  });
+
+  const previewUrl =
+    preview.file === file ? preview.url : "";
+
   const inputRef = useRef(null);
 
+  
   useEffect(() => {
-    if (!file) {
-      setPreviewUrl("");
-      return;
-    }
+    if (!file) return;
 
-    const objectUrl = URL.createObjectURL(file);
-    setPreviewUrl(objectUrl);
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setPreview({
+        file,
+        url: String(reader.result ?? ""),
+      });
+    };
+
+    reader.readAsDataURL(file);
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      reader.onload = null;
+
+      if (reader.readyState === FileReader.LOADING) {
+        reader.abort();
+      }
     };
   }, [file]);
+
 
   function handleFileChange(e) {
     const selected = e.target.files?.[0] || null;

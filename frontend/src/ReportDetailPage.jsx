@@ -1,23 +1,69 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import reports from "./data/reports.json";
+import { getReport } from "./api/client.js";
 import "./App.css";
 
 function ReportDetail() {
   const { id } = useParams();
-  const [imageError, setImageError] = useState(false);
 
-  const report = reports.find((item) => item.id === id);
+  const [result, setResult] = useState({
+    id: null,
+    report: null,
+    error: "",
+  });
 
-  if (!report) {
+  const [failedImageId, setFailedImageId] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+
+    getReport(id)
+      .then((response) => {
+        if (!active) return;
+
+        setResult({
+          id,
+          report: response.data ?? null,
+          error: "",
+        });
+      })
+      .catch((err) => {
+        if (!active) return;
+
+        setResult({
+          id,
+          report: null,
+          error: err.message || "Gagal memuat laporan.",
+        });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  if (result.id !== id) {
     return (
       <main className="detail-page">
-        <h1>Laporan tidak ditemukan</h1>
+        <p>Memuat detail laporan...</p>
+      </main>
+    );
+  }
+
+  if (result.error || !result.report) {
+    return (
+      <main className="detail-page">
+        <h1>Detail laporan tidak tersedia</h1>
+        <p role="alert">
+          {result.error || "Laporan tidak ditemukan."}
+        </p>
         <Link to="/">Kembali ke daftar laporan</Link>
       </main>
     );
   }
+
+  const report = result.report;
 
   return (
     <main className="detail-page">
@@ -27,11 +73,11 @@ function ReportDetail() {
 
       <article className="detail-card">
         <div className="detail-image">
-          {report.photoUrl && !imageError ? (
+          {report.photoUrl && failedImageId !== id ? (
             <img
               src={report.photoUrl}
               alt={report.title}
-              onError={() => setImageError(true)}
+              onError={() => setFailedImageId(id)}
             />
           ) : (
             <span>Foto barang tidak tersedia</span>
@@ -56,15 +102,15 @@ function ReportDetail() {
 
           <h2>Informasi Barang</h2>
 
-          <p>Kategori: {report.category.name}</p>
-          <p>Lokasi: {report.location.name}</p>
+          <p>Kategori: {report.category?.name ?? "-"}</p>
+          <p>Lokasi: {report.location?.name ?? "-"}</p>
 
           {report.locationDetail && (
             <p>Detail lokasi: {report.locationDetail}</p>
           )}
 
           <p>Tanggal kejadian: {report.eventDate}</p>
-          <p>Status: {report.status}</p>
+          <p>Status: {report.status ?? "Belum tersedia"}</p>
 
           <h2>Kontak Pelapor</h2>
 
