@@ -44,13 +44,56 @@ function ReportDetail() {
     };
   }, [id]);
 
+
   if (result.id !== id) {
     return (
-      <main className="detail-page">
-        <p>Memuat detail laporan...</p>
+      <main className="detail-page" aria-busy="true">
+        <div
+          className="detail-loading-heading"
+          role="status"
+          aria-live="polite"
+        >
+          <span
+            className="detail-loading-spinner"
+            aria-hidden="true"
+          />
+
+          <div>
+            <strong>Menyiapkan detail laporan...</strong>
+            <p>Foto dan informasi barang sedang dimuat.</p>
+          </div>
+        </div>
+
+        <div
+          className="detail-card detail-loading-card"
+          aria-hidden="true"
+        >
+          <div className="detail-image detail-skeleton-image">
+            <div className="detail-skeleton-photo-icon" />
+          </div>
+
+          <div className="detail-content detail-skeleton-content">
+            <div className="detail-skeleton-bar skeleton-badge" />
+            <div className="detail-skeleton-bar skeleton-title" />
+            <div className="detail-skeleton-bar skeleton-text" />
+            <div className="detail-skeleton-bar skeleton-text-short" />
+
+            <div className="detail-skeleton-divider" />
+
+            <div className="detail-skeleton-bar skeleton-subtitle" />
+            <div className="detail-skeleton-bar skeleton-text" />
+            <div className="detail-skeleton-bar skeleton-text-short" />
+
+            <div className="detail-skeleton-divider" />
+
+            <div className="detail-skeleton-bar skeleton-subtitle" />
+            <div className="detail-skeleton-bar skeleton-text" />
+          </div>
+        </div>
       </main>
     );
   }
+
 
   if (result.error || !result.report) {
     return (
