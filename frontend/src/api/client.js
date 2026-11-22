@@ -103,7 +103,11 @@ export async function getReports(params = {}) {
 export async function getReport(id) {
   if (USE_MOCK) {
     await delay(150);
-    const found = mockReports.find((item) => item.id === Number(id));
+    
+  const found = mockReports.find(
+    (item) => String(item.id) === String(id)
+);
+
     if (!found) {
       const error = new Error("Laporan tidak ditemukan.");
       error.code = "NOT_FOUND";

@@ -1,9 +1,11 @@
 
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import reports from "./data/reports.json";
+import { getReports } from "./api/client.js";
 import lookups from "./data/lookups.json";
 import "./App.css";
+
 
 const PAGE_SIZE = 12;
 
@@ -14,40 +16,48 @@ function App() {
   const [locationId, setLocationId] = useState("");
   const [page, setPage] = useState(1);
 
-  const filteredReports = reports
-    .filter((report) => {
-      const matchSearch = report.title
-        .toLowerCase()
-        .includes(search.toLowerCase().trim());
+  
+  const [reports, setReports] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-      const matchType = !type || report.type === type;
+  useEffect(() => {
+    let active = true;
 
-      const matchCategory =
-        !categoryId ||
-        report.category.id === Number(categoryId);
-
-      const matchLocation =
-        !locationId ||
-        report.location.id === Number(locationId);
-
-      return (
-        matchSearch &&
-        matchType &&
-        matchCategory &&
-        matchLocation
-      );
+    getReports({
+      q: search,
+      type,
+      categoryId,
+      locationId,
+      page,
+      pageSize: PAGE_SIZE,
     })
-    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      .then((result) => {
+        if (!active) return;
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredReports.length / PAGE_SIZE)
-  );
+        setReports(result.data ?? []);
+        setTotal(result.meta?.total ?? 0);
+        setTotalPages(result.meta?.totalPages ?? 1);
+      })
+      .catch((err) => {
+        if (!active) return;
 
-  const visibleReports = filteredReports.slice(
-    (page - 1) * PAGE_SIZE,
-    page * PAGE_SIZE
-  );
+        setReports([]);
+        setTotal(0);
+        setTotalPages(1);
+        setError(err.message || "Gagal memuat laporan.");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [search, type, categoryId, locationId, page]);
+
 
   function resetFilters() {
     setSearch("");
@@ -139,17 +149,27 @@ function App() {
       <section className="reports-section">
         <div className="section-heading">
           <h2>Daftar Laporan</h2>
-          <p>{filteredReports.length} laporan ditemukan</p>
+          <p>{total} laporan ditemukan</p>
         </div>
 
-        {visibleReports.length === 0 ? (
+        
+          {loading ? (
+            <div className="empty-state">
+              <p>Memuat laporan...</p>
+            </div>
+          ) : error ? (
+            <div className="empty-state">
+              <p role="alert">{error}</p>
+            </div>
+          ) : reports.length === 0 ? (
+
           <div className="empty-state">
             <p>Belum ada laporan yang cocok.</p>
             <button onClick={resetFilters}>Reset filter</button>
           </div>
         ) : (
           <div className="report-grid">
-            {visibleReports.map((report) => (
+            {reports.map((report) => (
               <article className="report-card" key={report.id}>
                 <div className="report-image">
                   <span className="image-placeholder">
