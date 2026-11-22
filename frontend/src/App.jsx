@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { getReports } from "./api/client.js";
 import lookups from "./data/lookups.json";
 import "./App.css";
+import "./RetroDashboard.css";
 
 
 const PAGE_SIZE = 12;
@@ -16,7 +17,7 @@ function App() {
   const [locationId, setLocationId] = useState("");
   const [page, setPage] = useState(1);
 
-  
+
   const [reports, setReports] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -77,11 +78,10 @@ function App() {
             barang yang kamu temukan di kampus.
           </p>
         </div>
-        
-        <div className="header-actions">
-          <span className="header-label">Fasilkom UI</span>
 
-          <Link to="/lapor" className="create-report-button">
+        <div className="header-actions">
+
+          <Link to="/lapor" className="create-report-button create-report-cta">
             + Buat Laporan
           </Link>
         </div>
@@ -99,17 +99,28 @@ function App() {
           }}
         />
 
-        <select
-          value={type}
-          onChange={(e) => {
-            setType(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="">Semua jenis</option>
-          <option value="LOST">Hilang</option>
-          <option value="FOUND">Ditemukan</option>
-        </select>
+
+        <div className="type-tabs" role="group" aria-label="Jenis laporan">
+          {[
+            { value: "", label: "Semua" },
+            { value: "LOST", label: "Hilang" },
+            { value: "FOUND", label: "Ditemukan" },
+          ].map((option) => (
+            <button
+              key={option.value || "all"}
+              type="button"
+              className="type-tab"
+              aria-pressed={type === option.value}
+              onClick={() => {
+                setType(option.value);
+                setPage(1);
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
 
         <select
           value={categoryId}
@@ -149,10 +160,18 @@ function App() {
       <section className="reports-section">
         <div className="section-heading">
           <h2>Daftar Laporan</h2>
-          <p>{total} laporan ditemukan</p>
+
+        <p>
+          {loading
+            ? "Sedang memuat laporan..."
+            : error
+              ? "Gagal memuat laporan"
+              : `${total} laporan ditemukan`}
+        </p>
+
         </div>
 
-        
+
           {loading ? (
             <div className="empty-state">
               <p>Memuat laporan...</p>
@@ -224,25 +243,31 @@ function App() {
           </div>
         )}
 
-        <div className="pagination">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-          >
-            Sebelumnya
-          </button>
 
-          <span>
-            Halaman {page} dari {totalPages}
-          </span>
+    {!loading && !error && totalPages > 1 && (
+      <div className="pagination">
+        <button
+          type="button"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Sebelumnya
+        </button>
 
-          <button
-            disabled={page >= totalPages}
-            onClick={() => setPage(page + 1)}
-          >
-            Berikutnya
-          </button>
-        </div>
+        <span>
+          Halaman {page} dari {totalPages}
+        </span>
+
+        <button
+          type="button"
+          disabled={page >= totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Berikutnya
+        </button>
+      </div>
+    )}
+
       </section>
     </main>
   );

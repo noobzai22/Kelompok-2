@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { createReport, getLookups } from "./api/client";
 import PhotoPicker from "./components/PhotoPicker";
 import "./App.css";
+import "./RetroForm_Stage6.css";
 
 const CONTACT_PLACEHOLDERS = {
   WHATSAPP: "Contoh: 081234567890",
@@ -316,7 +317,7 @@ function SubmitReport() {
           >
             <option value="LOST">Barang Hilang</option>
             <option value="FOUND">Barang Ditemukan</option>
-          </select>61
+          </select>
         </label>
 
         <label>

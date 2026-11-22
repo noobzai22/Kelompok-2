@@ -1,0 +1,724 @@
+/*
+ * LOST & FOUND PACIL — MODERN RETRO UI
+ * Consolidated dashboard stylesheet (Stages 1–4)
+ *
+ * GANTI isi frontend/src/RetroDashboard.css dengan isi file ini.
+ * Pastikan App.jsx tetap mengimpor App.css lalu RetroDashboard.css.
+ * Scope utama .app agar form dan detail tidak ikut dirombak.
+ * Semua state, route, handler, dan koneksi API tetap di App.jsx.
+ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Pixelify+Sans:wght@500;600;700&display=swap');
+
+:root {
+  color-scheme: light;
+  --pacil-ink: #172744;
+  --pacil-muted: #61708a;
+  --pacil-primary: #4358c8;
+  --pacil-primary-hover: #3346a8;
+  --pacil-border: #d5dfef;
+  --pacil-bg: #f7f9fd;
+  --pacil-surface: #ffffff;
+  --pacil-shadow: #e7ecf7;
+}
+
+body {
+  background: var(--pacil-bg);
+  color: var(--pacil-ink);
+}
+
+/* Dashboard container */
+.app {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 36px 28px 72px;
+  font-family: 'DM Sans', Inter, 'Segoe UI', sans-serif;
+  color: var(--pacil-ink);
+}
+
+/* Header / hero — retro accent is intentionally restrained */
+.app > .header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0 0 28px;
+  padding: 40px 42px;
+  overflow: hidden;
+  border: 1px solid #cbd9f1;
+  border-left: 4px solid var(--pacil-primary);
+  border-radius: 12px;
+  background: linear-gradient(115deg, #ecf2ff, #f4f7ff 65%, #edf3ff);
+}
+
+.app > .header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: radial-gradient(#9aadd5 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.app > .header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app > .header h1 {
+  max-width: 650px;
+  margin: 0 0 10px;
+  color: #293d88;
+  font-family: 'Pixelify Sans', 'Segoe UI', sans-serif;
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.app > .header p {
+  max-width: 540px;
+  margin: 0;
+  color: #506582;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.app .header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.app .header-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 9px 13px;
+  border: 1px solid #d2ddf5;
+  border-radius: 6px;
+  background: #fff;
+  color: #4358a3;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Primary calls to action */
+.app .create-report-button,
+.app .detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 1px solid #3649ad;
+  border-radius: 6px;
+  background: var(--pacil-primary);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.app .create-report-button {
+  padding: 12px 17px;
+  box-shadow: 3px 3px 0 #cad3ed;
+}
+
+.app .detail-button {
+  align-self: stretch;
+  width: 100%;
+  margin-top: auto;
+  padding: 10px 14px;
+  box-shadow: none;
+}
+
+.app .create-report-button:hover,
+.app .detail-button:hover {
+  background: var(--pacil-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Search and filters: same existing React state and handlers */
+.app > .filter-section {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.55fr) minmax(225px, 1.65fr) minmax(125px, 1fr) minmax(125px, 1fr) auto;
+  align-items: stretch;
+  gap: 12px;
+  margin: 0 0 36px;
+  padding: 16px;
+  border: 1px solid var(--pacil-border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 3px 4px 0 var(--pacil-shadow);
+}
+
+.app .filter-section input,
+.app .filter-section select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1.5px solid #c9d5e7;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--pacil-ink);
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.app .filter-section input::placeholder { color: #8390a5; }
+.app .filter-section input:hover,
+.app .filter-section select:hover { border-color: #96a9d1; }
+
+/* Segmented type filter from Stage 2 */
+.app .type-tabs {
+  display: flex;
+  min-width: 0;
+  min-height: 46px;
+  gap: 4px;
+  padding: 4px;
+  border: 1.5px solid #c9d5e7;
+  border-radius: 6px;
+  background: #f3f6fc;
+}
+
+.app .type-tab {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #536481;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.app .type-tab:hover:not([aria-pressed='true']) {
+  background: #e4ebfa;
+  color: #2d4174;
+}
+
+.app .type-tab[aria-pressed='true'] {
+  border-color: #3649ad;
+  background: var(--pacil-primary);
+  color: #fff;
+}
+
+.app .reset-button {
+  min-height: 46px;
+  padding: 0 17px;
+  border: 1.5px solid #cdd7eb;
+  border-radius: 6px;
+  background: #eef2fb;
+  color: #3b4e80;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.app .reset-button:hover { background: #e1e9fa; }
+
+/* Accessible keyboard focus across the dashboard */
+.app .filter-section :is(input, select):focus-visible,
+.app :is(button, a):focus-visible,
+.app .type-tab:focus-visible {
+  outline: 3px solid #9db3ff;
+  outline-offset: 3px;
+}
+
+/* Report list and cards */
+.app .section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.app .section-heading h2 {
+  margin: 0;
+  color: var(--pacil-ink);
+  font-family: inherit;
+  font-size: clamp(22px, 2.6vw, 27px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.app .section-heading p {
+  margin: 0;
+  color: var(--pacil-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.app .report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 20px;
+}
+
+.app .report-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #d6dfef;
+  border-radius: 10px;
+  background: var(--pacil-surface);
+  box-shadow: 2px 3px 0 #e9eef8;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.app .report-card:hover {
+  transform: translateY(-2px);
+  border-color: #adbfdf;
+  box-shadow: 3px 5px 0 #e6ecf8;
+}
+
+.app .report-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid #e4ebf6;
+  background: linear-gradient(140deg, #f4f7fd, #e9f0fb);
+}
+
+/* Simple image placeholder. Real report photos remain unchanged. */
+.app .report-image::before {
+  content: '';
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: 51px;
+  height: 38px;
+  border: 2px solid #b8c8e2;
+  border-radius: 5px;
+  background:
+    radial-gradient(circle at 78% 25%, #b8c8e2 0 4px, transparent 4.5px),
+    linear-gradient(138deg, transparent 51%, #b8c8e2 52% 59%, transparent 60%) left bottom / 56% 66% no-repeat,
+    linear-gradient(45deg, transparent 43%, #b8c8e2 44% 53%, transparent 54%) right bottom / 72% 76% no-repeat;
+  transform: translate(-50%, -50%);
+}
+
+.app .image-placeholder {
+  position: relative;
+  z-index: 1;
+  margin-top: 62px;
+  color: #7183a2;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.app .report-image img {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.app .report-card:hover .report-image img { transform: scale(1.015); }
+
+.app .card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 17px 18px 18px;
+}
+
+.app .card-content .badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.app .badge.lost {
+  border-color: #f5caca;
+  background: #fff0ef;
+  color: #a33939;
+}
+
+.app .badge.found {
+  border-color: #bde7d0;
+  background: #e8f8ef;
+  color: #217a58;
+}
+
+.app .card-content h3 {
+  margin: 11px 0 7px;
+  color: var(--pacil-ink);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.app .card-content .description {
+  display: -webkit-box;
+  min-height: 2.9em;
+  margin: 0;
+  overflow: hidden;
+  color: #62718a;
+  font-size: 12.5px;
+  line-height: 1.5;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.app .report-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  gap: 5px;
+  margin: 16px 0 18px;
+  padding-top: 13px;
+  border-top: 1px solid #e9eef7;
+  color: #4d607e;
+}
+
+.app .report-info p {
+  margin: 0;
+  color: #4d607e;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Pagination / no-result state */
+.app .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 34px 0 0;
+  color: #506280;
+  font-size: 13px;
+  text-align: center;
+}
+
+.app .pagination button,
+.app .empty-state button {
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid #cbd7ec;
+  border-radius: 6px;
+  background: #fff;
+  color: #3b4d7c;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.app .pagination button:not(:disabled):hover,
+.app .empty-state button:hover { background: #eef3ff; }
+.app .pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.app .empty-state {
+  padding: 48px 24px;
+  border: 1px dashed #b7c5df;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--pacil-muted);
+  text-align: center;
+}
+
+.app .empty-state p { margin: 0 0 14px; }
+.app .empty-state p:last-child { margin-bottom: 0; }
+
+/* Stage 4: adaptive layouts; preserve existing UI controls */
+@media (max-width: 1100px) {
+  .app > .filter-section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app > .filter-section input[type='search'],
+  .app > .filter-section .type-tabs {
+    grid-column: 1 / -1;
+  }
+
+  .app > .filter-section .reset-button { grid-column: 1 / -1; }
+  .app .report-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .app { padding: 20px 16px 56px; }
+
+  .app > .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 24px;
+  }
+
+  .app > .header h1 { font-size: clamp(29px, 7vw, 39px); }
+  .app > .header p { font-size: 14px; }
+  .app .header-actions { justify-content: flex-start; }
+  .app .header-label { margin: 0; }
+  .app .report-grid { gap: 16px; }
+}
+
+@media (max-width: 600px) {
+  .app > .filter-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .app > .filter-section input[type='search'],
+  .app > .filter-section .type-tabs,
+  .app > .filter-section .reset-button {
+    grid-column: auto;
+  }
+
+  .app .report-grid { grid-template-columns: minmax(0, 1fr); }
+  .app .section-heading { align-items: flex-start; flex-direction: column; }
+  .app .card-content { padding: 16px; }
+  .app .reset-button { width: 100%; }
+  .app .pagination { gap: 10px; }
+}
+
+@media (max-width: 380px) {
+  .app { padding-inline: 12px; }
+  .app > .header { padding: 24px 18px; }
+  .app .header-actions { width: 100%; }
+  .app .create-report-button { flex-grow: 1; }
+  .app .type-tab { padding-inline: 4px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .report-card,
+  .app .create-report-button,
+  .app .detail-button,
+  .app .report-image img { transition: none; }
+
+  .app .report-card:hover,
+  .app .create-report-button:hover,
+  .app .detail-button:hover,
+  .app .report-card:hover .report-image img { transform: none; }
+}
+
+
+/* Tombol Buat Laporan - Modern Retro */
+
+.app .create-report-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 54px;
+  padding: 14px 24px;
+
+  background: #4355cf;
+  color: #ffffff;
+  border: 2px solid #3446ad;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+
+  box-shadow: 3px 3px 0 #25377e;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Ikon panah kecil */
+.app .create-report-cta::after {
+  content: "↗";
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+/* Efek saat diarahkan kursor */
+.app .create-report-cta:hover {
+  background: #3548c0;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #25377e;
+}
+
+.app .create-report-cta:hover::after {
+  transform: translate(2px, -2px);
+}
+
+/* Efek saat diklik */
+.app .create-report-cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #25377e;
+}
+
+.app .create-report-cta:focus-visible {
+  outline: 3px solid #93a5ff;
+  outline-offset: 5px;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 600px) {
+  .app .create-report-cta {
+    min-height: 48px;
+    padding: 12px 17px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .create-report-cta,
+  .app .create-report-cta::after {
+    transition: none;
+  }
+}
+
+/* TAHAP 9 — POLISH KARTU LAPORAN
+   Tempel paling bawah frontend/src/RetroDashboard.css.
+   Tidak mengubah App.jsx, filter, routing, atau API.
+*/
+
+/* Kartu lebih bersih; efek hover tetap tenang. */
+.app .report-card {
+  position: relative;
+  border: 1px solid #d8e1ef;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(27, 46, 92, 0.05);
+  transition: transform 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.app .report-card:hover {
+  transform: translateY(-3px);
+  border-color: #acbee2;
+  box-shadow: 0 10px 24px rgba(27, 46, 92, 0.10);
+}
+
+.app .report-card:focus-within {
+  outline: 2px solid #8b9ce4;
+  outline-offset: 3px;
+}
+
+/* Foto ringkas; placeholder tetap terlihat jika foto kosong/gagal dimuat. */
+.app .report-image {
+  aspect-ratio: 2 / 1;
+  border-bottom: 1px solid #e4ebf5;
+  background-color: #edf3fc;
+  background-image: radial-gradient(#cfdbeb 0.7px, transparent 0.8px);
+  background-size: 18px 18px;
+}
+
+.app .report-image::before {
+  top: 42%;
+  width: 45px;
+  height: 34px;
+  border-color: #b5c6df;
+  opacity: 0.85;
+}
+
+.app .image-placeholder {
+  margin-top: 62px;
+  padding: 5px 10px;
+  border: 1px solid #d9e4f2;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #667994;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.app .report-image img {
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.app .report-card:hover .report-image img {
+  transform: scale(1.025);
+}
+
+/* Informasi dan tombol: konsisten, tanpa dekorasi berlebihan. */
+.app .card-content {
+  padding: 18px;
+}
+
+.app .card-content h3 {
+  margin-top: 12px;
+  line-height: 1.35;
+}
+
+.app .report-info {
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.app .detail-button {
+  gap: 9px;
+  min-height: 44px;
+  padding: 11px 16px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.app .detail-button::after {
+  content: "→";
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.app .detail-button:hover::after {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .report-card,
+  .app .report-image img,
+  .app .detail-button::after {
+    transition: none;
+  }
+
+  .app .report-card:hover,
+  .app .report-card:hover .report-image img,
+  .app .detail-button:hover::after {
+    transform: none;
+  }
+}

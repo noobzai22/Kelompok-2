@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { getReport } from "./api/client.js";
 import "./App.css";
+import "./RetroDetail_Stage5.css";
 
 function ReportDetail() {
   const { id } = useParams();
@@ -65,6 +66,19 @@ function ReportDetail() {
 
   const report = result.report;
 
+  const phoneDigits = String(report.contactValue ?? "").replace(/\D/g, "");
+
+  const whatsappNumber = phoneDigits.startsWith("0")
+    ? `62${phoneDigits.slice(1)}`
+    : phoneDigits;
+
+  const whatsappLink =
+    report.contactMethod === "WHATSAPP" &&
+    /^628\d{7,12}$/.test(whatsappNumber)
+      ? `https://wa.me/${whatsappNumber}`
+      : null;
+
+
   return (
     <main className="detail-page">
       <Link to="/" className="detail-back">
@@ -115,7 +129,20 @@ function ReportDetail() {
           <h2>Kontak Pelapor</h2>
 
           <p>Metode: {report.contactMethod}</p>
-          <p>Kontak: {report.contactValue}</p>
+
+          <p>Kontak: {report.contactValue ?? "-"}</p>
+
+          {whatsappLink && (
+            <a
+              className="contact-whatsapp-link"
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hubungi via WhatsApp ↗
+            </a>
+          )}
+
         </div>
       </article>
     </main>
