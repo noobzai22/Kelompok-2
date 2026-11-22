@@ -1,5 +1,6 @@
 
 
+import ReportListSkeleton from "./components/ReportListSkeleton.jsx";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { getReports } from "./api/client.js";
@@ -172,10 +173,9 @@ function App() {
         </div>
 
 
+
           {loading ? (
-            <div className="empty-state">
-              <p>Memuat laporan...</p>
-            </div>
+            <ReportListSkeleton />
           ) : error ? (
             <div className="empty-state">
               <p role="alert">{error}</p>

@@ -320,3 +320,142 @@
   outline: 2px solid #4355cf;
   outline-offset: 3px;
 }
+
+
+/* ===================================
+   DETAIL PAGE - SKELETON LOADING
+=================================== */
+
+.detail-page .detail-loading-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  color: #172744;
+}
+
+.detail-page .detail-loading-heading strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.detail-page .detail-loading-heading p {
+  margin: 5px 0 0;
+  color: #61708a;
+  font-size: 13px;
+}
+
+/* Spinner kecil */
+.detail-page .detail-loading-spinner {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 3px solid #dce5fa;
+  border-top-color: #4358c8;
+  border-radius: 50%;
+  animation: detail-spin 0.9s linear infinite;
+}
+
+@keyframes detail-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Foto sementara */
+.detail-page .detail-loading-card .detail-skeleton-image {
+  min-height: 380px;
+  background: #edf2fb;
+  border-right: 1px solid #d5dfef;
+}
+
+.detail-page .detail-skeleton-photo-icon {
+  width: 65px;
+  height: 52px;
+  border: 3px solid #c2d0eb;
+  border-radius: 6px;
+  opacity: 0.7;
+}
+
+/* Susunan informasi sementara */
+.detail-page .detail-skeleton-content {
+  width: 100%;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.detail-page .detail-skeleton-bar {
+  height: 14px;
+  max-width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    #e7ecf7 25%,
+    #f6f8ff 50%,
+    #e7ecf7 75%
+  );
+  background-size: 200% 100%;
+  animation: detail-shimmer 1.8s ease-in-out infinite;
+}
+
+.detail-page .skeleton-badge {
+  width: 76px;
+  height: 28px;
+}
+
+.detail-page .skeleton-title {
+  width: 85%;
+  height: 28px;
+}
+
+.detail-page .skeleton-text {
+  width: 100%;
+}
+
+.detail-page .skeleton-text-short {
+  width: 65%;
+}
+
+.detail-page .skeleton-subtitle {
+  width: 50%;
+  height: 18px;
+}
+
+.detail-page .detail-skeleton-divider {
+  height: 1px;
+  margin: 10px 0;
+  background: #e6ecf7;
+}
+
+/* Efek shimmer yang bergerak pelan */
+@keyframes detail-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .detail-page .detail-loading-card {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-page .detail-loading-card .detail-skeleton-image {
+    min-height: 220px;
+    border-right: none;
+    border-bottom: 1px solid #d5dfef;
+  }
+}
+
+/* Aksesibilitas: kurangi animasi jika diminta */
+@media (prefers-reduced-motion: reduce) {
+  .detail-page .detail-loading-spinner,
+  .detail-page .detail-skeleton-bar {
+    animation: none;
+  }
+}
